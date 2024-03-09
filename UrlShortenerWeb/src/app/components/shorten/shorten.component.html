@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row">
+    <h1 class="text-center text-primary-emphasis p-4">URL Shortener</h1>
+  </div>
+  <div class="row">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-12">
+            <div class="input-group mb-4 mt-1">
+              <input type="text" class="form-control p-4 bg-light-subtle" placeholder="Enter your URL here" [(ngModel)]="this.shortenUrlRequest.longUrl">
+              <button class="btn btn-primary p-4" type="button" (click)="this.getShortUrl()" [disabled]="this.shortenUrlRequest.longUrl == ''"><span *ngIf="!this.generating">Shorten</span><span *ngIf="this.generating" class="spinner-border spinner-border-sm"></span></button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-8 col-md-10 col-sm-12 mx-auto">
+            <p [innerHTML]="this.errorMessage" class="mx-auto text-center mb-4 mt-1 text-danger" *ngIf="this.errorMessage != ''"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 col-md-6 col-sm-8 mx-auto">
+            <p class="mx-auto text-center mb-1 text-body-secondary">Optional settings:</p>
+            <div class="input-group mb-1 mx-auto">
+              <span class="input-group-text">Possible clicks:</span>
+              <input type="number" class="form-control bg-light-subtle" min="1" [(ngModel)]="this.shortenUrlRequest.remainingClicks">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4 col-md-6 col-sm-8 mx-auto">
+            <div class="input-group mb-1 mt-1 mx-auto">
+              <span class="input-group-text">Expires in:</span>
+              <input type="number" class="form-control" min="1" [(ngModel)]="this.expiryNumber" [disabled]="this.expiryTime == '' || this.expiryTime == null">
+              <select class="form-select bg-light-subtle" [(ngModel)]="this.expiryTime">
+                <option selected></option>
+                <option value="1">Minutes</option>
+                <option value="60">Hours</option>
+                <option value="1440">Days</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-sm-12 col-md-11 col-lg-10 mx-auto">
+      <h4 class="text-center text-primary-emphasis mb-3">Your short URL:</h4>
+      <div class="input-group mb-5">
+        <p class="form-control user-select-all text-center p-3 mb-0 bg-light-subtle">{{this.shortenUrlResponse.shortUrl}}</p>
+        <button class="btn btn-secondary p-3" (click)="copyToClipboard()" [disabled]="this.shortenUrlResponse.shortUrl == '' || this.copiedToClipboard"><i *ngIf="!this.copiedToClipboard" class="fa fa-clone"></i><i *ngIf="this.copiedToClipboard" class="fa fa-check"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
